@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento do TCC</title>
+    <style>
+        body{
+            background-color: rgba(255, 235, 205, 0.507);
+        }
+    </style>
+</head>
+<body>
+   <h1>Atividades</h1>
+
+<ol>
+<li>Seleção e preparação das variáveis</li>
+<ol>
+<li>Diagrama de disperção dos valores (visualizar a linearidade)</li>
+<li>Matriz de correlação: identificar se as variáveis independentes são independentes entre si -> análise de multicolinearidade</li>
+<li>Linearizar as relações entre Xi e Y (probit ou logit), dado os dados nao lineares</li>
+</ol>
+</ol>
+<ol>
+    <li>Escolha e ajuste do modelo de regressão </li>
+    <ol>
+    <li>Executar a saída para todos os previsores (Xi) e examinar a saída,  observando quais contribuem substancialmente. *análise stepwise</li>
+    </ol>
+</ol>
+    <ol>
+    <li>Diagnóstico de adequação do modelo </li>
+    <ol>
+    <li>R^2: Quanto, em porcentagem, as variáveis independentes explicam Y Teste F, Teste t para coef. (Teste de hipóteses, onde beta i = 0 é a hip. nula -> não influencia o modelo)</li>
+    <li>Multicolinearidade</li>
+    <li>Análise dos resíduos</li>
+    <ol>
+        <li>Normalidade dos resíduos, i.e, se eles variam dentro do intervalo esperado pela dist. normal</li>
+        <li>Homocedasticidade: Variância de Y é igual, independente de Xi</li>
+        <li>Verificação de Outliers: se existem valores muito discrepantes do esperado, fazendo uma *tendência no modelo</li>
+        <li>Independencia dos resíduos</li>
+    </ol>
+    </ol>
+    </ol> 
+<br><br>
+<ol>
+    <li>Autocorrelação Espacial</li>
+    <ol>
+        <li><a href="pag02.html">
+            Matriz de vizinhança: comparar a similaridade dos atributos geográficos em feições vizinhas p/ estabelecer o critério de vizinhança
+                wij = 1 se vizinho
+                wij = 0 se não
+        </a></li>
+        <li><a href="pag03.html">
+            Índice Global de associação espacial: Índice de  Moran
+                I = 1 -> Localzação rlacionada a atributos.
+        </a></li>
+        <li>Avaliar se os efeitos de correlação espacial são significativos: Teste de Pseudo Significância</li>
+        <li>Permutações espaciais aleatórias - distribuição simulada dos ínidices de Moran
+        <ul>H0: Indice de Moran = 0 (correlação nula) </ul>
+        <ul>H1: Correlação significativa</ul></li>
+    </ol>
+</ol>
+
+   
+</body>
+</html>
