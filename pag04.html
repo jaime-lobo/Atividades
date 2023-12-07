@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passo a Passo em R</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .code-box {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Passo a Passo em R</h1>
+
+        <div class="code-box">
+            <p><strong>Passo 1:</strong> Carregar pacotes</p>
+            <code>
+                library(tidyverse) <br>
+                library(sf) <br>
+                library(spdep) <br>
+                library(spatialreg)
+            </code>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Passo 2:</strong> Carregar dados</p>
+            <code>
+                agua_rede_sf <- read_sf("Downloads/agua_rede_sf.gpkg")
+            </code>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Passo 3:</strong> Eliminar os valores faltantes (NA)</p>
+            <code>
+                agua_rede_sf <- agua_rede_sf %>% <br>
+filter(!is.na(ID_IBGE) & !is.na(CONSUMO1) & !is.na(RENDAPITA))
+            </code>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Passo 4:</strong> Separar amostragem apenas para a localização específica</p>
+            <code>
+agua_rede_sf <- agua_rede_sf %>% <br>
+filter(UF == "BA")
+            </code>
+        </div>
+        
+        <div class="code-box">
+            <p><strong>Passo 5:</strong> Criar modelo de regressão simples</p>
+            <code>
+                modelo1 <- lm(formula = CONSUMO1 ~ RENDAPITA, <br>
+                data = agua_rede_sf, <br>
+                na.action = na.exclude)
+            </code>
+        </div>
+
+        <div class="code-box">
+            <p><strong>Passo 5:</strong> Criar modelo de regressão simples</p>
+            <code>
+                modelo1 <- lm(formula = CONSUMO1 ~ RENDAPITA, <br>
+                data = agua_rede_sf, <br>
+                na.action = na.exclude)
+            </code>
+        </div>
+        <img src="regressão_simples_BA.png" alt="Regressão Simples">
+        <img src="Reg_BA.png" alt="Regressão Simples, Bahia">
+
+        <div class="code-box">
+            <p><strong>Passo 6:</strong> Criar um arquivo com a lista de vizinhança e matriz com pesos espaciais</p>
+            <code>
+            w <- poly2nb(pl = agua_rede_sf, <br>
+             row.names = agua_rede_sf$ID_IBGE) 
+             <br><br>
+             #zero.policy -> ignora as unidades espaciais que não têm vizinhos <br>
+wm <- nb2mat(neighbours = w, style='B', zero.policy = TRUE) <br>
+rwm <- mat2listw(x = wm, style='W', zero.policy = TRUE) 
+
+            </code>
+        </div>
+        <div class="code-box">
+            <p><strong>Passo 7:</strong> I de Moran (two-sided: teste bicaldal)</p>
+            <code>
+                lm.morantest(model = modelo1, <br>
+                listw = rwm, <br>
+                alternative = "two.sided", <br>
+                zero.policy = TRUE)
+            </code>
+        </div>
+        <img src="I_moran.png" alt="I de Moran">
+
+        <div class="code-box">
+            <p><strong>Passo 8:</strong> Spatial Lag e Spatial Error Models</p>
+            <code>
+                sar_modelo <- lagsarlm(formula = CONSUMO1 ~ RENDAPITA, <br>
+                       data = agua_rede_sf, <br>
+                       listw = rwm, <br>
+                       zero.policy = TRUE) <br>
+                summary(sar_modelo) <br>
+                car_modelo <- errorsarlm(formula = CONSUMO1 ~ RENDAPITA, <br>
+                         data = agua_rede_sf, <br>
+                         listw = rwm, <br>
+                         zero.policy = TRUE) <br>
+                summary(car_modelo)
+            </code>
+        </div>
+        <img src="Sar.png" alt="SAR"> <br><br>
+        <img src="Car.png" alt="CAR">
+
+        <div class="code-box">
+            <p><strong>Passo 9:</strong> Exportar os resíduos do modelo para o GeoDa</p>
+            <code>
+                agua_rede_sar_car <- agua_rede_sf %>% <br>
+  mutate(sar_residuos = residuals(sar_modelo), <br>
+         car_residuos = residuals(car_modelo)) <br>
+write_sf(agua_rede_sar_car, "Downloads/agua_rede_sar_car.shp")
+            </code>
+        </div>
+    <a href="pag05.html"> Imagens do GeoDa</a>
+    
+    </div>
+</body>
+</html>

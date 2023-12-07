@@ -3,64 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desenvolvimento do TCC</title>
+    <title>Desenvolvimento do TCC - Estatística</title>
     <style>
-        body{
-            background-color: rgba(255, 235, 205, 0.507);
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-top: 0;
+        }
+
+        ol {
+            list-style: none;
+            counter-reset: item;
+            padding: 0;
+        }
+
+        ol li {
+            counter-increment: item;
+            margin-bottom: 15px;
+        }
+
+        ol li:before {
+            content: counters(item, ".") ". ";
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-   <h1>Atividades</h1>
+    <div class="container">
+        <h1>Atividades</h1>
 
-<ol>
-<li>Seleção e preparação das variáveis</li>
-<ol>
-<li>Diagrama de disperção dos valores (visualizar a linearidade)</li>
-<li>Matriz de correlação: identificar se as variáveis independentes são independentes entre si -> análise de multicolinearidade</li>
-<li>Linearizar as relações entre Xi e Y (probit ou logit), dado os dados nao lineares</li>
-</ol>
-</ol>
-<ol>
-    <li>Escolha e ajuste do modelo de regressão </li>
-    <ol>
-    <li>Executar a saída para todos os previsores (Xi) e examinar a saída,  observando quais contribuem substancialmente. *análise stepwise</li>
-    </ol>
-</ol>
-    <ol>
-    <li>Diagnóstico de adequação do modelo </li>
-    <ol>
-    <li>R^2: Quanto, em porcentagem, as variáveis independentes explicam Y Teste F, Teste t para coef. (Teste de hipóteses, onde beta i = 0 é a hip. nula -> não influencia o modelo)</li>
-    <li>Multicolinearidade</li>
-    <li>Análise dos resíduos</li>
-    <ol>
-        <li>Normalidade dos resíduos, i.e, se eles variam dentro do intervalo esperado pela dist. normal</li>
-        <li>Homocedasticidade: Variância de Y é igual, independente de Xi</li>
-        <li>Verificação de Outliers: se existem valores muito discrepantes do esperado, fazendo uma *tendência no modelo</li>
-        <li>Independencia dos resíduos</li>
-    </ol>
-    </ol>
-    </ol> 
-<br><br>
-<ol>
-    <li>Autocorrelação Espacial</li>
-    <ol>
-        <li><a href="pag02.html">
-            Matriz de vizinhança: comparar a similaridade dos atributos geográficos em feições vizinhas p/ estabelecer o critério de vizinhança
-                wij = 1 se vizinho
-                wij = 0 se não
-        </a></li>
-        <li><a href="pag03.html">
-            Índice Global de associação espacial: Índice de  Moran
-                I = 1 -> Localzação rlacionada a atributos.
-        </a></li>
-        <li>Avaliar se os efeitos de correlação espacial são significativos: Teste de Pseudo Significância</li>
-        <li>Permutações espaciais aleatórias - distribuição simulada dos ínidices de Moran
-        <ul>H0: Indice de Moran = 0 (correlação nula) </ul>
-        <ul>H1: Correlação significativa</ul></li>
-    </ol>
-</ol>
+        <ol>
+            <li>Seleção e preparação das variáveis
+                <ol>
+                    <li>Diagrama de dispersão dos valores (visualizar a linearidade)</li>
+                    <li>Matriz de correlação: identificar se as variáveis independentes são independentes entre si -> análise de multicolinearidade</li>
+                    <li>Linearizar as relações entre Xi e Y (probit ou logit), dado os dados não lineares</li>
+                </ol>
+            </li>
+            
+            <li>Escolha e ajuste do modelo de regressão 
+                <ol>
+                    <li>Executar a saída para todos os previsores (Xi) e examinar a saída, observando quais contribuem substancialmente. *análise stepwise</li>
+                </ol>
+            </li>
+            
+            <li>Diagnóstico de adequação do modelo 
+                <ol>
+                    <li>R^2: Quanto, em porcentagem, as variáveis independentes explicam Y Teste F, Teste t para coef. (Teste de hipóteses, onde beta i = 0 é a hip. nula -> não influencia o modelo)</li>
+                    <li>Multicolinearidade</li>
+                    <li>Análise dos resíduos
+                        <ol>
+                            <li>Normalidade dos resíduos, i.e, se eles variam dentro do intervalo esperado pela dist. normal</li>
+                            <li>Homocedasticidade: Variância de Y é igual, independente de Xi</li>
+                            <li>Verificação de Outliers: se existem valores muito discrepantes do esperado, fazendo uma *tendência no modelo</li>
+                            <li>Independência dos resíduos</li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
 
-   
+            <li>Autocorrelação Espacial
+                <ol>
+                    <li><a href="pag02.html">Matriz de vizinhança: comparar a similaridade dos atributos geográficos em feições vizinhas p/ estabelecer o critério de vizinhança
+                            wij = 1 se vizinho
+                            wij = 0 se não
+                    </a></li>
+                    <li><a href="pag03.html">Índice Global de associação espacial: Índice de Moran
+                            I = 1 -> Localização relacionada a atributos.
+                    </a></li>
+                    <li>Avaliar se os efeitos de correlação espacial são significativos: Teste de Pseudo Significância</li>
+                    <li>Permutações espaciais aleatórias - distribuição simulada dos índices de Moran
+                        <ul>H0: Índice de Moran = 0 (correlação nula) </ul>
+                        <ul>H1: Correlação significativa</ul></li>
+                </ol>
+            </li>
+
+            <li><a href="pag04.html">Aplicação em R do modelo Spatial Lag</a></li>
+        </ol>
+    </div>
 </body>
 </html>
